@@ -8,15 +8,12 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
+    @book = Book.find(params[:id])
   end
 
   # GET /books/new
   def new
     @book = Book.new
-  end
-
-  # GET /books/1/edit
-  def edit
   end
 
   # POST /books or /books.json
@@ -34,6 +31,11 @@ class BooksController < ApplicationController
     end
   end
 
+  # GET /books/1/edit
+  def edit
+    @book = Book.find(params[:id])
+  end
+
   # PATCH/PUT /books/1 or /books/1.json
   def update
     respond_to do |format|
@@ -47,8 +49,13 @@ class BooksController < ApplicationController
     end
   end
 
+  def delete 
+    @book = Book.find(params[:id])
+  end
+
   # DELETE /books/1 or /books/1.json
   def destroy
+    @book = Book.find(params[:id])
     @book.destroy
 
     respond_to do |format|
@@ -65,6 +72,11 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title)
+      params.require(:book).permit(
+        :title,
+        :author,
+        :price,
+        :published_date
+      )
     end
 end
